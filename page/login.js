@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   View,
@@ -8,7 +9,29 @@ import {
   StyleSheet,
 } from "react-native";
 
-export default function Login() {
+import { useFonts } from "expo-font";
+
+
+export default function Login({navigation}) {
+
+   const nav = ()=>{
+
+        navigation.navigate("Cadastro")
+
+      }
+  const [ font] = useFonts({
+  
+      'spider':require('../assets/fonts/spider.ttf')
+  
+      })
+  
+      if(!font){
+  
+          return null;
+      }
+
+     
+
   return (
     <ImageBackground
       source={{
@@ -48,8 +71,8 @@ export default function Login() {
             <Text style={styles.buttonText}>Entrar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Cadastrar</Text>
+          <TouchableOpacity style={styles.button} onPress={nav}>
+            <Text style={styles.buttonText} >Cadastrar</Text>
           </TouchableOpacity>
 
         </View>
@@ -69,6 +92,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 25,
   },
+
+  
 
   card: {
     backgroundColor: "#111",
@@ -108,6 +133,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     textAlign: "center",
     marginBottom: 5,
+    fontFamily: "spider",
   },
 
   subtitle: {
