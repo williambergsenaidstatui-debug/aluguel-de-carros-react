@@ -1,5 +1,6 @@
-
+import { useState } from "react";
 import React from "react";
+import { Alert } from "react-native";
 import {
   View,
   Text,
@@ -11,26 +12,33 @@ import {
 
 import { useFonts } from "expo-font";
 
-
 export default function Login({navigation}) {
 
-   const nav = ()=>{
+  const [user, setUser] = useState("");
+  const [pass, setPass] = useState("");
 
-        navigation.navigate("Cadastro")
+  function logar(){
+    if (user === "" || pass === ""){
+      Alert.alert("Erro", "Favor preencher todos os campos");
+    } else if (user === "Lucas" && pass === "123"){
+      Alert.alert("Sucesso!", "Usuario Logado com sucesso!");
+      navigation.navigate("Cadastro");
+    } else {
+      Alert.alert("Erro!", "Usuario não Cadastrado!");
+    }
+  }
 
-      }
-  const [ font] = useFonts({
-  
-      'spider':require('../assets/fonts/spider.ttf')
-  
-      })
-  
-      if(!font){
-  
-          return null;
-      }
+  const nav = ()=>{
+    navigation.navigate("Cadastro");
+  }
 
-     
+  const [font] = useFonts({
+    'spider': require('../assets/fonts/spider.ttf')
+  });
+
+  if(!font){
+    return null;
+  }
 
   return (
     <ImageBackground
@@ -55,9 +63,11 @@ export default function Login({navigation}) {
           </Text>
 
           <TextInput
-            placeholder="Email"
+            placeholder="Usuário"
             placeholderTextColor="#888"
             style={styles.input}
+            value={user}
+            onChangeText={setUser}
           />
 
           <TextInput
@@ -65,14 +75,16 @@ export default function Login({navigation}) {
             placeholderTextColor="#888"
             secureTextEntry
             style={styles.input}
+            value={pass}
+            onChangeText={setPass}
           />
 
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Entrar</Text>
+          <TouchableOpacity style={styles.loginBtn} onPress={logar}>
+            <Text style={styles.loginBtnText}>Entrar</Text>
           </TouchableOpacity>
 
           <TouchableOpacity style={styles.button} onPress={nav}>
-            <Text style={styles.buttonText} >Cadastrar</Text>
+            <Text style={styles.buttonText}>Cadastrar</Text>
           </TouchableOpacity>
 
         </View>
@@ -92,8 +104,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     padding: 25,
   },
-
-  
 
   card: {
     backgroundColor: "#111",
@@ -154,7 +164,7 @@ const styles = StyleSheet.create({
     borderColor: "#333",
   },
 
-  button: {
+  loginBtn: {
     backgroundColor: "#FFD700",
     padding: 15,
     borderRadius: 12,
@@ -162,8 +172,24 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-  buttonText: {
+  loginBtnText: {
     color: "#000",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
+
+  button: {
+    backgroundColor: "#333",
+    padding: 15,
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: "#FFD700",
+  },
+
+  buttonText: {
+    color: "#FFD700",
     fontSize: 16,
     fontWeight: "bold",
   },
